@@ -18,8 +18,6 @@ class CreateTSupplierMainCategoryTable extends Migration
             $table->string('name', 30)->default('')->comment('类目名称');
             $table->tinyInteger('cate_status')->default('1')->comment('是否启用招商 1启用 2禁用');
             $table->integer('onsale_goods_num')->default('0')->comment('在架商品数');
-            $table->string('pic_material', 500)->default('')->comment('图片材料格式');
-            $table->string('file_material', 500)->default('')->comment('文件材料格式');
             $table->integer('ctime')->default(0);
             $table->integer('utime')->default(0);
             $table->integer('cuid')->default(0);

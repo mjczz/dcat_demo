@@ -24,7 +24,7 @@ class CreateSupplierBrandsTable extends Migration
             $table->string('business_license', 500)->default('')->comment('营业执照');
             $table->string('authorization_letter', 500)->default('')->comment('授权书');
             $table->string('processing_agreement', 500)->default('')->comment('代加工协议');
-            $table->tinyInteger("shenhe_status")->default(1)->comment("审核状态：1待审核 2审核通过 3审核拒绝");
+            $table->tinyInteger("shenhe_status")->default(1)->comment("审核状态：1审核中 2审核通过 3审核拒绝");
             // 2个更新方式：1入驻时的提审时间 2入驻后自己添加品牌时的提交审核时间,提交审核后，要更新t_brand
             $table->integer('submit_shenhe_time')->default(0)->comment("提交审核时间");
             $table->integer('success_shenhe_time')->default(0)->comment("审核通过时间");
