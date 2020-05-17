@@ -7,6 +7,7 @@ use Faker\Generator as Faker;
 
 $factory->define(SupplierMainCategory::class, function (Faker $faker) {
     return [
-        //
+        'name' => $faker->name,
+        'ctime' => time(),
     ];
 });
