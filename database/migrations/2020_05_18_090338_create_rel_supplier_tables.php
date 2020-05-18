@@ -17,6 +17,7 @@ class CreateRelSupplierTables extends Migration
             $table->increments('id');
             $table->integer("supplier_id")->comment("供货商id");
             $table->tinyInteger('enterprise_type')->default(0)->comment('企业性质：1授权经销商 2生产厂家 3贴牌经销商');
+            $table->tinyInteger('taxpayer')->default(1)->comment('纳税人资格：1一般纳税人 2小规模纳税人');
             $table->string('enterprise_name', 50)->default('')->comment('企业名称');
             $table->string('legal_person', 30)->default('')->comment('法人代表');
             $table->string('duty_paragraph', 100)->default('')->comment('税号');
