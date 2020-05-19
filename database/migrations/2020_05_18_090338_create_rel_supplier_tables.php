@@ -27,6 +27,9 @@ class CreateRelSupplierTables extends Migration
             $table->string('taxpayer_file', 100)->default('')->comment('一般纳税人资格证明');
             $table->string('faren_shouchi_zheng_file', 100)->default('')->comment('企业法人手持身份证人像面');
             $table->string('faren_shouchi_fan_file', 100)->default('')->comment('企业法人手持身份证国徽面');
+            $table->string('bank_kaihu_ming', 100)->default('')->comment('开户名');
+            $table->string('bank_kaihu_hang', 100)->default('')->comment('开户行名称');
+            $table->string('bank_kaihu_zhanghao', 100)->default('')->comment('开户行账号');
             $table->string('duijie_person', 30)->default('')->comment('对接人');
             $table->string('duijie_person_mobile', 50)->default('')->comment('对接人手机号');
             $table->string('duijie_person_email', 30)->default('')->comment('对接人邮箱');
@@ -64,45 +67,16 @@ class CreateRelSupplierTables extends Migration
 
         Schema::create('t_supplier_main_category', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name', 30)->default('')->comment('类目名称');
-            $table->tinyInteger('cate_status')->default('1')->comment('是否启用招商 1启用 2禁用');
-            $table->integer('onsale_goods_num')->default('0')->comment('在架商品数');
-            $table->integer('ctime')->default(0);
-            $table->integer('utime')->default(0);
-            $table->integer('cuid')->default(0);
-            $table->integer('uuid')->default(0);
-            $table->integer("delete_time")->nullable();
-        });
-
-        $sql = "ALTER TABLE `t_supplier_main_category` COMMENT '供货商-主营类目模板表'";
-        \Illuminate\Support\Facades\DB::statement($sql);
-
-        Schema::create('t_supplier_main_category_detail', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer("cate_id")->default(0)->comment("主营类目id");
-            $table->tinyInteger('cate_type')->default('1')->comment('类型 1图片材料 2文件材料');
-            $table->string('name', 50)->default('')->comment('图片名称或者文件名');
-            $table->string('desc', 100)->default('')->comment('图片默认提示文案');
-            $table->tinyInteger('is_required')->default('2')->comment('是否未必填 1是 2否');
-            $table->integer('ctime')->default(0);
-            $table->integer('utime')->default(0);
-            $table->integer('cuid')->default(0);
-            $table->integer('uuid')->default(0);
-            $table->integer("delete_time")->nullable();
-        });
-
-        $sql = "ALTER TABLE `t_supplier_main_category` COMMENT '供货商-主营类目模板对应的详情'";
-        \Illuminate\Support\Facades\DB::statement($sql);
-
-        Schema::create('t_supplier_rel_main_category', function (Blueprint $table) {
-            $table->increments('id');
             $table->integer("supplier_id")->default(0)->comment("供货商id");
-            $table->integer("cate_id")->default(0)->comment("主营类目id");
+            $table->integer("goods_cate_id")->default(0)->comment("goods_cat id");
+            $table->tinyInteger('cate_status')->default('1')->comment('是否启用招商 1启用 2禁用');
             $table->tinyInteger("shenhe_status")->default(1)->comment("审核状态：1审核中 2审核通过 3审核拒绝");
             // 2个更新方式：1入驻时的提审时间 2入驻后自己添加主营类目时的提交审核时间
             $table->integer('submit_shenhe_time')->default(0)->comment("提交审核时间");
             $table->integer('success_shenhe_time')->default(0)->comment("审核通过时间");
             $table->string("refuse_reason")->default('')->comment("审核拒绝理由");
+            $table->integer('onsale_goods_num')->default('0')->comment('在架商品数');
+            $table->string("shenhe_material", 1000)->default('')->comment("审核材料");
             $table->integer('ctime')->default(0);
             $table->integer('utime')->default(0);
             $table->integer('cuid')->default(0);
@@ -110,22 +84,14 @@ class CreateRelSupplierTables extends Migration
             $table->integer("delete_time")->nullable();
         });
 
-        $sql = "ALTER TABLE `t_supplier_rel_main_category` COMMENT '供货商-对应的主营类目'";
-        \Illuminate\Support\Facades\DB::statement($sql);
-
-        Schema::create('t_supplier_rel_main_category_detail', function (Blueprint $table) {
-            $table->integer("rel_id")->default(0)->comment("t_supplier_rel_main_category表的id");
-            $table->integer("detail_id")->default(0)->comment("主营类目详情id");
-            $table->string("url", 200)->default('')->comment("主营类目详情url");
-        });
-
-        $sql = "ALTER TABLE `t_supplier_rel_main_category_detail` COMMENT '供货商-对应的主营类目详情'";
+        $sql = "ALTER TABLE `t_supplier_main_category` COMMENT '供货商-主营类目表'";
         \Illuminate\Support\Facades\DB::statement($sql);
 
         Schema::create('t_supplier_brand', function (Blueprint $table) {
             $table->increments('id');
             $table->integer("supplier_id")->comment("供货商id");
-            $table->string('brand_name', 50)->default('')->comment('品牌名');
+            $table->integer("t_brand_id")->comment("关联t_brand id");
+            $table->string('name', 50)->default('')->comment('品牌名');
             $table->tinyInteger("brand_is_zhuan")->default(2)->comment("品牌是否是其他公司转让：1是 2否");
             $table->string('trademark_registration', 500)->default('')->comment('商标注册证明');
             $table->string('trademark_zhuan', 500)->default('')->comment('商标转让证明');
@@ -146,14 +112,6 @@ class CreateRelSupplierTables extends Migration
         });
 
         $sql = "ALTER TABLE `t_supplier_brand` COMMENT '供货商-品牌'";
-        \Illuminate\Support\Facades\DB::statement($sql);
-
-        Schema::create('t_supplier_t_brand', function (Blueprint $table) {
-            $table->integer("supplier_id")->comment("供货商id");
-            $table->integer("t_brand_id")->comment("t_brand id");
-        });
-
-        $sql = "ALTER TABLE `t_supplier_t_brand` COMMENT '供货商-关联t_brand'";
         \Illuminate\Support\Facades\DB::statement($sql);
 
         Schema::create('t_supplier_shipper', function (Blueprint $table) {
