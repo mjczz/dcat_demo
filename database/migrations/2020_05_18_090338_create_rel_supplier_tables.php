@@ -19,21 +19,21 @@ class CreateRelSupplierTables extends Migration
             $table->tinyInteger('enterprise_type')->default(0)->comment('企业性质：1授权经销商 2生产厂家 3贴牌经销商');
             $table->tinyInteger('taxpayer')->default(1)->comment('纳税人资格：1一般纳税人 2小规模纳税人');
             $table->string('enterprise_name', 50)->default('')->comment('企业名称');
-            $table->string('legal_person', 30)->default('')->comment('法人代表');
-            $table->string('duty_paragraph', 100)->default('')->comment('税号');
-            $table->string('organizer_file', 100)->default('')->comment('主办单位证件');
-            $table->string('faren_zheng_file', 100)->default('')->comment('企业法人身份证人像面');
-            $table->string('faren_fan_file', 100)->default('')->comment('企业法人身份证国徽面');
-            $table->string('taxpayer_file', 100)->default('')->comment('一般纳税人资格证明');
-            $table->string('faren_shouchi_zheng_file', 100)->default('')->comment('企业法人手持身份证人像面');
-            $table->string('faren_shouchi_fan_file', 100)->default('')->comment('企业法人手持身份证国徽面');
-            $table->string('bank_kaihu_ming', 100)->default('')->comment('开户名');
-            $table->string('bank_kaihu_hang', 100)->default('')->comment('开户行名称');
-            $table->string('bank_kaihu_zhanghao', 100)->default('')->comment('开户行账号');
-            $table->string('duijie_person', 30)->default('')->comment('对接人');
+            $table->string('legal_person', 50)->default('')->comment('法人代表');
+            $table->string('duty_paragraph', 200)->default('')->comment('税号');
+            $table->string('organizer_file', 200)->default('')->comment('主办单位证件');
+            $table->string('faren_zheng_file', 200)->default('')->comment('企业法人身份证人像面');
+            $table->string('faren_fan_file', 200)->default('')->comment('企业法人身份证国徽面');
+            $table->string('taxpayer_file', 200)->default('')->comment('一般纳税人资格证明');
+            $table->string('faren_shouchi_zheng_file', 200)->default('')->comment('企业法人手持身份证人像面');
+            $table->string('faren_shouchi_fan_file', 200)->default('')->comment('企业法人手持身份证国徽面');
+            $table->string('bank_kaihu_ming', 200)->default('')->comment('开户名');
+            $table->string('bank_kaihu_hang', 200)->default('')->comment('开户行名称');
+            $table->string('bank_kaihu_zhanghao', 200)->default('')->comment('开户行账号');
+            $table->string('duijie_person', 50)->default('')->comment('对接人');
             $table->string('duijie_person_mobile', 50)->default('')->comment('对接人手机号');
             $table->string('duijie_person_email', 30)->default('')->comment('对接人邮箱');
-            $table->string('recommend_person', 30)->default('')->comment('推荐人');
+            $table->string('recommend_person', 50)->default('')->comment('推荐人');
             $table->string('recommend_person_card', 10)->default('')->comment('推荐人身份证号后4位');
             $table->string('recommend_person_mobile', 30)->default('')->comment('推荐人手机号');
             $table->integer('ctime')->default(0);
@@ -49,6 +49,7 @@ class CreateRelSupplierTables extends Migration
         Schema::create('t_supplier_enterprise_info', function (Blueprint $table) {
             $table->increments('id');
             $table->integer("supplier_id")->comment("供货商id");
+            $table->string('circulation_license', 500)->default('')->comment('流通许可证');
             $table->string('production_license', 500)->default('')->comment('生产许可证');
             $table->string('license_for_operation', 500)->default('')->comment('经营许可证');
             $table->string('business_license', 500)->default('')->comment('营业执照');
@@ -160,6 +161,11 @@ class CreateRelSupplierTables extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('rel_supplier_tables');
+        Schema::dropIfExists('t_supplier_base_info');
+        Schema::dropIfExists('t_supplier_enterprise_info');
+        Schema::dropIfExists('t_supplier_main_category');
+        Schema::dropIfExists('t_supplier_brand');
+        Schema::dropIfExists('t_supplier_shipper');
+        Schema::dropIfExists('t_supplier_shenhe_refuse');
     }
 }

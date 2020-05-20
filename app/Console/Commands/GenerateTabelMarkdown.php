@@ -47,7 +47,9 @@ class GenerateTabelMarkdown extends Command
 
             $doc = $this->fieldDesc($res);
 
-            Storage::put('./'.$table_name.time().'.md', $doc);
+            Storage::put('./'.$table_name.'.md', $doc);
+
+            $this->info("生成文档成功：".$table_name.'.md');
         } catch (\Throwable $e) {
             $this->warn($e->getMessage());
         }
