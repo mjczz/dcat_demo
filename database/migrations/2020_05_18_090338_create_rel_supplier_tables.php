@@ -136,8 +136,8 @@ class CreateRelSupplierTables extends Migration
         Schema::create('t_supplier_shenhe_refuse', function (Blueprint $table) {
             $table->increments('id');
             $table->integer("supplier_id")->comment("供货商id");
-            $table->tinyInteger("sup_shenhe_refuse_type")->default(0)->comment("供货商审核拒绝类型");
-            $table->string('refuse_remark', 300)->default('')->comment('拒绝理由');
+            $table->string('err_option', 300)->default('')->comment('拒绝类型 （字段格式前端控制');
+            $table->string('err_data', 500)->default('')->comment('拒绝理由(字段格式前端控制)');
             $table->integer('ctime')->default(0);
             $table->integer('utime')->default(0);
             $table->integer('cuid')->default(0);
@@ -147,11 +147,6 @@ class CreateRelSupplierTables extends Migration
 
         $sql = "ALTER TABLE `t_supplier_shenhe_refuse` COMMENT '供货商-入驻提交审核的拒绝理由'";
         \Illuminate\Support\Facades\DB::statement($sql);
-
-
-
-
-
     }
 
     /**
