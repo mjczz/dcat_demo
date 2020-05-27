@@ -22,7 +22,7 @@ class CreateRelSupplierTables extends Migration
             $table->string('enterprise_name', 50)->default('')->comment('企业名称');
             $table->string('legal_person', 50)->default('')->comment('法人代表');
             $table->string('legal_idcard', 50)->default('')->comment('法人身份证号码');
-            $table->string('duty_paragraph', 200)->default('')->comment('税号');
+            $table->string('duty_paragraph', 200)->default('')->comment('税号、统一社会信用代码');
             $table->string('organizer_file', 200)->default('')->comment('主办单位证件');
             $table->string('faren_zheng_file', 200)->default('')->comment('企业法人身份证人像面');
             $table->string('faren_fan_file', 200)->default('')->comment('企业法人身份证国徽面');

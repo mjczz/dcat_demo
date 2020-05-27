@@ -40,16 +40,18 @@ class GenerateTabelMarkdown extends Command
      */
     public function handle()
     {
-        $table_name = $this->ask('请输入表名：');
-
+        //$table_name = $this->ask('请输入表名：');
         try {
-            $res = DB::select('SELECT COLUMN_NAME,DATA_TYPE,COLUMN_COMMENT FROM information_schema.COLUMNS WHERE TABLE_NAME = ? ', [$table_name]);
+            $databaes = 'dcat_demo';
+            $tables = DB::select('SELECT TABLE_NAME FROM information_schema.tables WHERE table_schema= ?', [$databaes]);
 
-            $doc = $this->fieldDesc($res);
-
-            Storage::put('./'.$table_name.'.md', $doc);
-
-            $this->info("生成文档成功：".$table_name.'.md');
+            foreach ($tables as $v) {
+                $table_name = $v->TABLE_NAME;
+                $res = DB::select('SELECT COLUMN_NAME,DATA_TYPE,COLUMN_COMMENT FROM information_schema.COLUMNS WHERE TABLE_NAME = ? ', [$table_name]);
+                $doc = $this->fieldDesc($res);
+                Storage::put('./'.$table_name.'.md', $doc);
+                $this->info("生成文档成功：".$table_name.'.md');
+            }
         } catch (\Throwable $e) {
             $this->warn($e->getMessage());
         }
