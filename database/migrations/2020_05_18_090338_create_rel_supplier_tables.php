@@ -17,9 +17,11 @@ class CreateRelSupplierTables extends Migration
             $table->increments('id');
             $table->integer("supplier_id")->comment("供货商id");
             $table->tinyInteger('enterprise_type')->default(0)->comment('企业性质：1授权经销商 2生产厂家 3贴牌经销商');
+            $table->string('business_brand_name', 50)->default('')->comment('经营品牌名称');
             $table->tinyInteger('taxpayer')->default(1)->comment('纳税人资格：1一般纳税人 2小规模纳税人');
             $table->string('enterprise_name', 50)->default('')->comment('企业名称');
             $table->string('legal_person', 50)->default('')->comment('法人代表');
+            $table->string('legal_idcard', 50)->default('')->comment('法人身份证号码');
             $table->string('duty_paragraph', 200)->default('')->comment('税号');
             $table->string('organizer_file', 200)->default('')->comment('主办单位证件');
             $table->string('faren_zheng_file', 200)->default('')->comment('企业法人身份证人像面');
@@ -49,13 +51,11 @@ class CreateRelSupplierTables extends Migration
         Schema::create('t_supplier_enterprise_info', function (Blueprint $table) {
             $table->increments('id');
             $table->integer("supplier_id")->comment("供货商id");
-            $table->string('circulation_license', 500)->default('')->comment('流通许可证');
             $table->string('production_license', 500)->default('')->comment('生产许可证');
-            $table->string('license_for_operation', 500)->default('')->comment('经营许可证');
-            $table->string('business_license', 500)->default('')->comment('营业执照');
-            $table->string('processing_agreement', 500)->default('')->comment('代加工协议');
+            $table->string('circulation_license', 500)->default('')->comment('流通许可证');
             $table->string('authorization_letter', 500)->default('')->comment('授权书');
-            $table->string('trademark_registration', 500)->default('')->comment('商标注册证明');
+            $table->string('license_for_operation', 500)->default('')->comment('经营许可证');
+            $table->string('oem_license', 2000)->default('')->comment('贴牌经销商--生产商家资料与经营许可');
             $table->integer('ctime')->default(0);
             $table->integer('utime')->default(0);
             $table->integer('cuid')->default(0);

@@ -5,6 +5,11 @@ ALTER TABLE `t_supplier` ADD COLUMN success_shenhe_time INTEGER(11) NOT NULL DEF
 ALTER TABLE `t_supplier` ADD COLUMN success_code INTEGER(11) NOT NULL DEFAULT 0 COMMENT '供货商入驻，审核通过编号';
 
 
+ALTER TABLE `t_supplier_settlement` ADD COLUMN invoiced_status TINYINT(1) NOT NULL DEFAULT 1 COMMENT '1未开票 2已开票';
+ALTER TABLE `t_supplier_settlement` ADD COLUMN invoice_url VARCHAR(200) NOT NULL DEFAULT '' COMMENT '发票地址';
+ALTER TABLE `t_supplier_settlement` ADD COLUMN receipt_url VARCHAR(200) NOT NULL DEFAULT '' COMMENT '回执地址';
+
+
 
 
 
