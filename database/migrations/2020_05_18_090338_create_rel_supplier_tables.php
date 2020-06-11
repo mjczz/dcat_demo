@@ -150,6 +150,31 @@ class CreateRelSupplierTables extends Migration
 
         $sql = "ALTER TABLE `t_supplier_shenhe_refuse` COMMENT '供货商-入驻提交审核的拒绝理由'";
         \Illuminate\Support\Facades\DB::statement($sql);
+
+        Schema::create('t_supplier_contract', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer("supplier_id")->default(0)->comment("供货商id");
+            $table->string("account_id", 200)->default('')->comment("个人账户id");
+            $table->string("per_name", 50)->default('')->comment("个人账号name");
+            $table->string("trd_user_id_per", 200)->default('')->comment("创建个人账户的用户唯一标识");
+            $table->string("org_account_id", 200)->default('')->comment("企业账户id");
+            $table->string("org_name", 100)->default('')->comment("企业账号-org_name");
+            $table->string("trd_user_id_org", 200)->default('')->comment("创建企业用户的唯一标识,不能与trd_user_id_per相同");
+            $table->tinyInteger("status")->default(1)->comment("合同状态：1未审核 2审核中 3审核成功 4审核失败");
+            $table->string("contract_url", 200)->default('')->comment("合同状地址");
+            $table->string("flow_id", 200)->default('')->comment("合同流程id");
+            $table->string("id_number", 100)->default('')->comment("证件号");
+            $table->string("mobile", 50)->default('')->comment("手机号码，手机号为空时无法使用短信意愿认证");
+            $table->string("file_id", 100)->default('')->comment("签署流程文件id");
+            $table->integer('ctime')->default(0);
+            $table->integer('utime')->default(0);
+            $table->integer('cuid')->default(0);
+            $table->integer('uuid')->default(0);
+            $table->integer("delete_time")->nullable();
+        });
+
+        $sql = "ALTER TABLE `t_supplier_contract` COMMENT '供货商-合同'";
+        \Illuminate\Support\Facades\DB::statement($sql);
     }
 
     /**
@@ -165,5 +190,6 @@ class CreateRelSupplierTables extends Migration
         Schema::dropIfExists('t_supplier_brand');
         Schema::dropIfExists('t_supplier_shipper');
         Schema::dropIfExists('t_supplier_shenhe_refuse');
+        Schema::dropIfExists('t_supplier_contract');
     }
 }

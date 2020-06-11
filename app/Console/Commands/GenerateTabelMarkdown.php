@@ -42,7 +42,7 @@ class GenerateTabelMarkdown extends Command
     {
         //$table_name = $this->ask('请输入表名：');
         try {
-            $databaes = 'dcat_demo';
+            $databaes = 'dcat_admin_demo';
             $tables = DB::select('SELECT TABLE_NAME FROM information_schema.tables WHERE table_schema= ?', [$databaes]);
 
             foreach ($tables as $v) {
