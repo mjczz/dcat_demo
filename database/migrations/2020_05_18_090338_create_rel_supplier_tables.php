@@ -160,8 +160,9 @@ class CreateRelSupplierTables extends Migration
             $table->string("org_account_id", 200)->default('')->comment("企业账户id");
             $table->string("org_name", 100)->default('')->comment("企业账号-org_name");
             $table->string("trd_user_id_org", 200)->default('')->comment("创建企业用户的唯一标识,不能与trd_user_id_per相同");
-            $table->tinyInteger("status")->default(1)->comment("合同状态：1未审核 2审核中 3审核成功 4审核失败");
-            $table->string("contract_url", 200)->default('')->comment("合同状地址");
+            $table->tinyInteger("status")->default(1)->comment("合同状态：1未签署 2签署中 3签署成功 4签署失败");
+            $table->string("contract_name", 100)->default('')->comment("合同名称");
+            $table->string("contract_sign_url", 1000)->default('')->comment("合同签署链接");
             $table->string("flow_id", 200)->default('')->comment("合同流程id");
             $table->string("id_number", 100)->default('')->comment("证件号");
             $table->string("mobile", 50)->default('')->comment("手机号码，手机号为空时无法使用短信意愿认证");
